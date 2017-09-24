@@ -18,7 +18,7 @@ void theCube( float c_x, float c_y, float c_z, GLfloat r, GLfloat g, GLfloat b){
 void drawGrid( ){
     int i;
     for (i=0; i<100; i++) {
-        // save the status of matrix
+        
         glPushMatrix();
         
         if (i<50) {
@@ -46,30 +46,29 @@ void drawA( ){
     
     glutSolidCube(1.0); // center cube
     
-    // Draw left side
-    for (i=0; i<8; i++) {
+    for (i=0; i<8; i++) {  // Draw left side
         glTranslatef(-0.2, -1, -0.2);
         glutSolidCube(1.0);
     }
     
-    // Move the start point back to point ( 8, 8, 8 )
-    for (i=0; i<8; i++) {
+    
+    for (i=0; i<8; i++) { // Move the start point back to point ( 8, 8, 8 )
         glTranslatef(0.2, 1, 0.2);
     }
     
-    // Draw right side
-    for (i=0; i<8; i++) {
+    
+    for (i=0; i<8; i++) { // Draw right side
         glTranslatef(0.2, -1, 0.2);
         glutSolidCube(1.0);
     }
     
-    // Move the start point to the center of right edge
-    for (i=0; i<4; i++) {
+    
+    for (i=0; i<4; i++) { // Move the start point to the center of right edge
         glTranslatef(-0.2, 0.7, -0.2);
     }
     
-    // Draw middle line
-    for (i=0; i<8; i++) {
+    
+    for (i=0; i<8; i++) { // Draw middle line
         glTranslatef(-0.2, 0, -0.2);
         glutSolidCube(1.0);
     }
@@ -79,24 +78,24 @@ void drawA( ){
 void drawPlus( ){
     glutSolidCube(1.0);
     
-    glTranslatef(0, 0, 1);
+    glTranslatef(0, 0, 1); // right
     glutSolidCube(1.0);
     
-    glTranslatef(0, 0, -2);
+    glTranslatef(0, 0, -2); // left
     glutSolidCube(1.0);
     
-    glTranslatef(0, 1, 1);
+    glTranslatef(0, 1, 1); // up
     glutSolidCube(1.0);
     
-    glTranslatef(0, -2, 0);
+    glTranslatef(0, -2, 0); // down
     glutSolidCube(1.0);
 }
 
 void draw3DCordinate( ){
     glTranslatef(-33,5,-85);
     glRotatef(-90,1,0,0);
-    // Draw the grid
-    drawGrid();
+    
+    drawGrid(); // Draw the grid
     
     glRotatef(90, 1, 0, 0);
     drawGrid();
@@ -116,7 +115,7 @@ void drawExclamation( ){
     glutSolidCube(1.0);
 }
 
-// Display the cube
+// Display the geometry
 void display( ){
     
     static float i = 0, j = 0;
@@ -177,44 +176,40 @@ void init( ){
     gluPerspective(35, 1.0f, 0.1f, 1000);
     glMatrixMode(GL_MODELVIEW);
     
-    // Enable the depth test. If not, the display of cones will be incorrect.
-    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);  // Enable the depth test. If not, the display of cones will be incorrect.
     glClearColor(0.1, 0.5, 0.1, 1); // green
     
 }
 
 void changeSize(int w, int h) {
     
-    // 防止除数即高度为0
-    // (你可以设置窗口宽度为0).
-    if (h == 0)
+    // If height equal to ' 0 ', let height equal to ' 1 '
+    if (h == 0){
         h = 1;
+    }
     float ratio = 1.0* w / h;
     
-    // 单位化投影矩阵。
-    glMatrixMode(GL_PROJECTION);
+    glMatrixMode(GL_PROJECTION); // Set projetion mode
     glLoadIdentity();
     
-    // 设置视口大小为整个窗口大小
-    glViewport(0, 0, w, h);
+    glViewport(0, 0, w, h);  // Set view port equal to the size of window
     
-    // 设置正确的投影矩阵
-    gluPerspective(45, ratio, 1, 1000);
-    //下面是设置模型视图矩阵
-    glMatrixMode(GL_MODELVIEW);
+    gluPerspective(45, ratio, 1, 1000); // Set perspective proporities
+    
+    glMatrixMode(GL_MODELVIEW); // Set model view
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f);//设置观测点
+    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f); // Set view point
 }
 
 int main( int argc, char **argv){
-    glutInit(&argc, argv); // GLUT 环境初始化
-    glutInitDisplayMode(GLUT_DOUBLE); // 显示模式初始化
-    glutInitWindowSize(800, 600); //定义窗口大小
-    glutCreateWindow("Homework One"); //显示窗口
+    glutInit(&argc, argv); // GLUT environment initiation
+    glutInitDisplayMode(GLUT_DOUBLE); // display mode initiation
+    glutInitWindowSize(800, 600); // set the width and height of window
+    glutCreateWindow("Homework One"); // display the window
     init();
-    glutDisplayFunc(display); //注册 OpenGL 绘图函数(一种特殊的调用方式,下同)
-    glutIdleFunc(display); //指定程序空闲时调用函数
-    glutReshapeFunc(changeSize); //指定窗口形状变化时的回调函数
+    glutDisplayFunc(display); // register display function
+    glutIdleFunc(display); // call display function when in spare time
+    glutReshapeFunc(changeSize); // call changeSize function when the size of window changed
     glutMainLoop();
     return 0;
 }
