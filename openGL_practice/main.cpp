@@ -3,7 +3,30 @@
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
 
-#include <math.h>
+// function prototypes
+void theCube( float c_x, float c_y, float c_z, GLfloat r, GLfloat g, GLfloat b);
+void drawGrid( );
+void drawA( );
+void drawPlus( );
+void draw3DCordinate( );
+void DoRasterString( float x, float y, float z, char *s );
+void display( );
+void init( );
+void changeSize(int w, int h);
+
+// main function
+int main( int argc, char **argv){
+    glutInit(&argc, argv); // GLUT environment initiation
+    glutInitDisplayMode(GLUT_DOUBLE); // display mode initiation
+    glutInitWindowSize(1000, 700); // set the width and height of window
+    glutCreateWindow("Homework One"); // display the window
+    init();
+    glutDisplayFunc(display); // register display function
+    glutIdleFunc(display); // call display function when in spare time
+    glutReshapeFunc(changeSize); // call changeSize function when the size of window changed
+    glutMainLoop();
+    return 0;
+}
 
 // Create a cube
 void theCube( float c_x, float c_y, float c_z, GLfloat r, GLfloat g, GLfloat b){
@@ -14,7 +37,7 @@ void theCube( float c_x, float c_y, float c_z, GLfloat r, GLfloat g, GLfloat b){
     glPopMatrix();
 }
 
-// Draw grid 50 x-y-z cordinates
+// Draw grid 100 x-y-z cordinates
 void drawGrid( ){
     int i;
     for (i=0; i<200; i++) {
@@ -41,10 +64,11 @@ void drawGrid( ){
     }
 }
 
+// Draw character ' A '
 void drawA( ){
     int i;
     
-    glutSolidCube(1.0); // center cube
+    glutSolidCube(1.0); // The center cube
     
     for (i=0; i<8; i++) {  // Draw left side
         glTranslatef(-0.2, -1, -0.2);
@@ -75,6 +99,7 @@ void drawA( ){
     
 }
 
+// Draw symbol ' + '
 void drawPlus( ){
     glutSolidCube(1.0);
     
@@ -91,16 +116,7 @@ void drawPlus( ){
     glutSolidCube(1.0);
 }
 
-void draw3DCordinate( ){
-    glTranslatef(-33,5,-85);
-    glRotatef(-90,1,0,0);
-    
-    drawGrid(); // Draw the grid
-    
-    glRotatef(90, 1, 0, 0);
-    drawGrid();
-}
-
+// Draw symbol ' ! '
 void drawExclamation( ){
     int i;
     
@@ -115,12 +131,23 @@ void drawExclamation( ){
     glutSolidCube(1.0);
 }
 
+// Draw 100 x-y-z cordinates
+void draw3DCordinate( ){
+    glTranslatef(-33,5,-85);
+    glRotatef(-90,1,0,0);
+    
+    drawGrid();
+    
+    glRotatef(90, 1, 0, 0);
+    drawGrid();
+}
+
 // use glut to display a string of characters using a raster font:
 void DoRasterString( float x, float y, float z, char *s )
 {
     glRasterPos3f( (GLfloat)x, (GLfloat)y, (GLfloat)z );
     
-    char c;         // one character to print
+    char c; // one character to print
     for( ; ( c = *s ) != '\0'; s++ )
     {
         glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
@@ -147,26 +174,24 @@ void display( ){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     
-    /* Start drawing conrinate */
+    // Start drawing conrinate
     glTranslatef(12, -38, -102);
     glRotatef(30, 0, 1, 0);
     draw3DCordinate();
     
-    /* Start drawing 'A' 
-     * Center Point: ( 8, 8, 8 )
-     */
+    // Start drawing 'A'
+    // Center Point: ( 38, 18, 38 )
+    
     glPushMatrix();
     glColor3f(1, 0, 0); // red
     glTranslatef(38,18,38);
     glScalef(2.5, 2.5, 2.5);
     glRotatef(i, 0, 1, 0);
-    
     drawA( );
     glPopMatrix();
     
-    /* Start drawing '+' 
-     * Center Point: ( 10, 8, 10) 
-     */
+    // Start drawing '+'
+    // Center Point: ( 10, 8, 10)
     glPushMatrix();
     glColor3f(1, 1, 0); // yellow
     glTranslatef(45, 18, 40);
@@ -175,7 +200,7 @@ void display( ){
     drawPlus( );
     glPopMatrix();
     
-    /* Start drawing ' ! ' */
+    // Start drawing ' ! '
     glPushMatrix();
     glColor3f(1, 0, 1); // purple
     glTranslatef(50, 18, 50);
@@ -227,17 +252,4 @@ void changeSize(int w, int h) {
     
 //    glLoadIdentity();
 //    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f); // Set view point
-}
-
-int main( int argc, char **argv){
-    glutInit(&argc, argv); // GLUT environment initiation
-    glutInitDisplayMode(GLUT_DOUBLE); // display mode initiation
-    glutInitWindowSize(1000, 700); // set the width and height of window
-    glutCreateWindow("Homework One"); // display the window
-    init();
-    glutDisplayFunc(display); // register display function
-    glutIdleFunc(display); // call display function when in spare time
-    glutReshapeFunc(changeSize); // call changeSize function when the size of window changed
-    glutMainLoop();
-    return 0;
 }
