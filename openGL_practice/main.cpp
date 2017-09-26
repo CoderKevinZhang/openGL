@@ -14,27 +14,27 @@ void theCube( float c_x, float c_y, float c_z, GLfloat r, GLfloat g, GLfloat b){
     glPopMatrix();
 }
 
-// Draw grid
+// Draw grid 50 x-y-z cordinates
 void drawGrid( ){
     int i;
-    for (i=0; i<100; i++) {
+    for (i=0; i<200; i++) {
         
         glPushMatrix();
         
-        if (i<50) {
+        if (i<100) {
             glTranslated(0, 0, i);
         }
         
-        if (i>=50) {
-            glTranslated(i-50, 0, 0);
+        if (i>=100) {
+            glTranslated(i-100, 0, 0);
             glRotatef(-90, 0, 1, 0);
         }
         
         glBegin(GL_LINES);
         glColor3f(1, 1, 1); // white
         glLineWidth(1);
-        glVertex3f(0, -0.1, 0);
-        glVertex3f(49, -0.1, 0);
+        glVertex3f(0, 0, 0);
+        glVertex3f(99, 0, 0);
         
         glEnd();
         glPopMatrix();
@@ -125,15 +125,15 @@ void display( ){
         i = 0;
     }
     
-    j += 0.01;
-    if (j > 1) {
+    j += 0.02;
+    if (j > 2.4) {
         j = 0;
     }
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     
-    glTranslatef(42, -22, -22);
+    glTranslatef(12, -38, -102);
     glRotatef(30, 0, 1, 0);
     draw3DCordinate();
     
@@ -142,7 +142,8 @@ void display( ){
      */
     glPushMatrix();
     glColor3f(1, 0, 0); // red
-    glTranslatef(23,8,23);
+    glTranslatef(38,18,38);
+    glScalef(2.5, 2.5, 2.5);
     glRotatef(i, 0, 1, 0);
     
     drawA( );
@@ -153,7 +154,8 @@ void display( ){
      */
     glPushMatrix();
     glColor3f(1, 1, 0); // yellow
-    glTranslatef(25, 8, 25);
+    glTranslatef(45, 18, 40);
+    glScalef(2.5, 2.5, 2.5);
     glRotatef(i, 0, 1, 0);
     drawPlus( );
     glPopMatrix();
@@ -161,7 +163,7 @@ void display( ){
     /* Start drawing ' ! ' */
     glPushMatrix();
     glColor3f(1, 0, 1); // purple
-    glTranslatef(28, 8, 28);
+    glTranslatef(50, 18, 50);
     glRotatef(-10, 0, 0, 1);
     glScalef(j, j, j);
     drawExclamation( );
@@ -173,7 +175,7 @@ void display( ){
 void init( ){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(35, 1.0f, 0.1f, 1000);
+    gluPerspective(45, 1.0f, 0.1f, 1000);
     glMatrixMode(GL_MODELVIEW);
     
     glEnable(GL_DEPTH_TEST);  // Enable the depth test. If not, the display of cones will be incorrect.
@@ -195,10 +197,10 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);  // Set view port equal to the size of window
     
     gluPerspective(45, ratio, 1, 1000); // Set perspective proporities
-    
+
     glMatrixMode(GL_MODELVIEW); // Set model view
-    glLoadIdentity();
-    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f); // Set view point
+//    glLoadIdentity();
+//    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f); // Set view point
 }
 
 int main( int argc, char **argv){
