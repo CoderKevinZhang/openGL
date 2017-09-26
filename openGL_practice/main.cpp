@@ -115,16 +115,30 @@ void drawExclamation( ){
     glutSolidCube(1.0);
 }
 
+// use glut to display a string of characters using a raster font:
+void DoRasterString( float x, float y, float z, char *s )
+{
+    glRasterPos3f( (GLfloat)x, (GLfloat)y, (GLfloat)z );
+    
+    char c;         // one character to print
+    for( ; ( c = *s ) != '\0'; s++ )
+    {
+        glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
+    }
+}
+
 // Display the geometry
 void display( ){
     
     static float i = 0, j = 0;
     
+    // i indicates the rotation degree
     i += 1;
     if (i > 360) {
         i = 0;
     }
     
+    // j indicates the scalling number
     j += 0.02;
     if (j > 2.4) {
         j = 0;
@@ -133,6 +147,7 @@ void display( ){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     
+    /* Start drawing conrinate */
     glTranslatef(12, -38, -102);
     glRotatef(30, 0, 1, 0);
     draw3DCordinate();
@@ -169,6 +184,15 @@ void display( ){
     drawExclamation( );
     glPopMatrix();
     
+    glColor3f(0, 0, 0);
+    DoRasterString( -4, 80, 0, "Y" ); // Axe ' Y '
+    
+    glColor3f(0, 0, 0);
+    DoRasterString( 104, 0, 0, "X" ); // Axe ' X '
+    
+    glColor3f(0, 0, 0);
+    DoRasterString( -4, 0, 60, "Z" ); // Axe ' Z '
+    
     glutSwapBuffers();
 }
 
@@ -179,10 +203,11 @@ void init( ){
     glMatrixMode(GL_MODELVIEW);
     
     glEnable(GL_DEPTH_TEST);  // Enable the depth test. If not, the display of cones will be incorrect.
-    glClearColor(0.1, 0.5, 0.1, 1); // green
+    glClearColor(0.5, 0.5, 0.5, 1); // green
     
 }
 
+// changeSize Function would be called when window size change manually
 void changeSize(int w, int h) {
     
     // If height equal to ' 0 ', let height equal to ' 1 '
@@ -199,6 +224,7 @@ void changeSize(int w, int h) {
     gluPerspective(45, ratio, 1, 1000); // Set perspective proporities
 
     glMatrixMode(GL_MODELVIEW); // Set model view
+    
 //    glLoadIdentity();
 //    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f); // Set view point
 }
@@ -206,7 +232,7 @@ void changeSize(int w, int h) {
 int main( int argc, char **argv){
     glutInit(&argc, argv); // GLUT environment initiation
     glutInitDisplayMode(GLUT_DOUBLE); // display mode initiation
-    glutInitWindowSize(800, 600); // set the width and height of window
+    glutInitWindowSize(1000, 700); // set the width and height of window
     glutCreateWindow("Homework One"); // display the window
     init();
     glutDisplayFunc(display); // register display function
