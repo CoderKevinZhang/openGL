@@ -3,8 +3,9 @@
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
 
+// constants
+
 // function prototypes
-void theCube( float c_x, float c_y, float c_z, GLfloat r, GLfloat g, GLfloat b);
 void drawGrid( );
 void drawA( );
 void drawPlus( );
@@ -26,15 +27,6 @@ int main( int argc, char **argv){
     glutReshapeFunc(changeSize); // call changeSize function when the size of window changed
     glutMainLoop();
     return 0;
-}
-
-// Create a cube
-void theCube( float c_x, float c_y, float c_z, GLfloat r, GLfloat g, GLfloat b){
-    glPushMatrix();
-    glColor3f(r, g ,b);
-    glTranslatef(c_x, c_y, c_z);
-    glutSolidCube(1.0);
-    glPopMatrix();
 }
 
 // Draw grid 100 x-y-z cordinates
@@ -147,7 +139,7 @@ void DoRasterString( float x, float y, float z, char *s )
 {
     glRasterPos3f( (GLfloat)x, (GLfloat)y, (GLfloat)z );
     
-    char c; // one character to print
+    char c;	// one character to print
     for( ; ( c = *s ) != '\0'; s++ )
     {
         glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
@@ -228,7 +220,7 @@ void init( ){
     glMatrixMode(GL_MODELVIEW);
     
     glEnable(GL_DEPTH_TEST);  // Enable the depth test. If not, the display of cones will be incorrect.
-    glClearColor(0.5, 0.5, 0.5, 1); // green
+    glClearColor(0.5, 0.5, 0.5, 1); // grey
     
 }
 
@@ -249,7 +241,4 @@ void changeSize(int w, int h) {
     gluPerspective(45, ratio, 1, 1000); // Set perspective proporities
 
     glMatrixMode(GL_MODELVIEW); // Set model view
-    
-//    glLoadIdentity();
-//    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, -1.0, 0.0f, 1.0f, 0.0f); // Set view point
 }
